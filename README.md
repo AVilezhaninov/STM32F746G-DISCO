@@ -1,4 +1,4 @@
-## Common pieces of code
+## STM32F746G-DISCO templates
 Template projects for STM32F746G-DISCO board.
 
 ### List
