@@ -1,14 +1,17 @@
-/* Includes ------------------------------------------------------------------*/
 #include "RCC.h"
 
 
-/* Extern --------------------------------------------------------------------*/
+/******************************************************************************/
+/* Extern *********************************************************************/
+/******************************************************************************/
 extern uint32_t SystemCoreClock;
 extern const uint8_t APBPrescTable[];
 extern void SystemCoreClockUpdate(void);
 
 
-/* Private define ------------------------------------------------------------*/
+/******************************************************************************/
+/* Define *********************************************************************/
+/******************************************************************************/
 #define PLL_M   25
 #define PLL_N   432
 #define PLL_P   2
@@ -19,7 +22,9 @@ extern void SystemCoreClockUpdate(void);
 #define APB2_PRESCALER    RCC_CFGR_PPRE2_DIV2
 
 
-/* Exported functions --------------------------------------------------------*/
+/******************************************************************************/
+/* Exported functions *********************************************************/
+/******************************************************************************/
 /**
  * Set system clocks
  */
@@ -85,7 +90,7 @@ void SystemClock_Init(void) {
  * Get HCLK frequency
  * @return  HCLK frequency
  */
-uint32_t GetHCLKFreq(void) {
+uint32_t GetHCLKFrequency(void) {
     return SystemCoreClock;
 }
 
@@ -94,8 +99,8 @@ uint32_t GetHCLKFreq(void) {
  * Get PCLK1 frequency
  * @return  PCLK1 frequency
  */
-uint32_t GetPCLK1Freq(void) {
-    return (GetHCLKFreq() >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]);
+uint32_t GetPCLK1Frequency(void) {
+    return (GetHCLKFrequency() >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]);
 }
 
 
@@ -103,6 +108,32 @@ uint32_t GetPCLK1Freq(void) {
  * Get PCLK2 frequency
  * @return  PCLK2 frequency
  */
-uint32_t GetPCLK2Freq(void) {
-    return (GetHCLKFreq() >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]);
+uint32_t GetPCLK2Frequency(void) {
+    return (GetHCLKFrequency() >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]);
+}
+
+
+/**
+ * Blocking delay in us
+ * @param delay [us]
+ */
+void StupidDelay_us(volatile uint32_t delay) {
+    delay *= (SystemCoreClock / 1000000u);
+
+    while (delay-- > 0u) {
+        ;
+    }
+}
+
+
+/**
+ * Blocking delay in ms
+ * @param delay [ms]
+ */
+void StupidDelay_ms(volatile uint32_t delay) {
+    delay *= (SystemCoreClock / 1000u);
+
+    while (delay-- > 0u) {
+        ;
+    }
 }

@@ -2,10 +2,16 @@
 #include "rcc.h"
 
 
+/******************************************************************************/
+/* Private variables **********************************************************/
+/******************************************************************************/
 /* USART BAUDRATE */
 #define USART_BAUDRATE      115200u
 
 
+/******************************************************************************/
+/* Interrupts *****************************************************************/
+/******************************************************************************/
 /**
  * USART1 interrupt handler
  */
@@ -16,6 +22,9 @@ void USART1_IRQHandler(void) {
 }
 
 
+/******************************************************************************/
+/* Main ***********************************************************************/
+/******************************************************************************/
 int main(void) {
     /* Init system clock */
     SystemClock_Init();
@@ -42,7 +51,7 @@ int main(void) {
     /* USART1 Rx interrupt enable */
     USART1->CR1 |= USART_CR1_RXNEIE;
     /* Set USART1 baudrate */
-    USART1->BRR = GetPCLK2Freq() / USART_BAUDRATE;
+    USART1->BRR = GetPCLK2Frequency() / USART_BAUDRATE;
     /* Set USART1 interrupt priority */
     NVIC_SetPriority(USART1_IRQn, 1u);
     /* Enable USART1 interrupts */
@@ -50,7 +59,7 @@ int main(void) {
     /* Enable USART1 */
     USART1->CR1 |= USART_CR1_UE;
 
-    while (1) {
+    while (1u) {
 
     }
 }
